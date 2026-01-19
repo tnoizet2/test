@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculateur d’âge</title>
+    <style>
+        /* 🌈 CSS */
+        :root {
+            --bleu: #4f7cac;
+            --bleu-fonce: #355b73;
+            --fond: #f2f4f7;
+            --blanc: #ffffff;
+            --gris: #e0e0e0;
+            --vert: #2e8b57;
+            --orange: #e67e22;
+            --rouge: #e74c3c;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--fond);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        
+        main {
+            background: var(--blanc);
+            padding: 40px 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+            transition: all 0.3s ease;
+        }
+
+        main:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: var(--bleu-fonce);
+            margin-bottom: 25px;
+            font-size: 1.6em;
+        }
+
+        
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid var(--gris);
+            border-radius: 8px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--bleu);
+            box-shadow: 0 0 5px rgba(79, 124, 172, 0.3);
+        }
+
+        button {
+            background: var(--bleu);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: var(--bleu-fonce);
+            transform: scale(1.03);
+        }
+
+      
+        #resultat {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05em;
+            border: 1px solid transparent;
+            min-height: 24px;
+        }
+
+        .succes {
+            color: var(--vert);
+            background-color: #e6f4ea;
+            border-color: var(--vert);
+        }
+
+        .avertissement {
+            color: var(--orange);
+            background-color: #fff4e6;
+            border-color: var(--orange);
+        }
+
+        .erreur {
+            color: var(--rouge);
+            background-color: #fdecea;
+            border-color: var(--rouge);
+        }
+
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Calculateur d’âge</h1>
+
+        <form id="formAge">
+            <input type="text" id="prenom" placeholder="Votre prénom">
+            <input type="number" id="annee" placeholder="Année de naissance">
+            <button type="submit">Calculer</button>
+        </form>
+
+        <div id="resultat"></div>
+
+
+    </main>
+
+    <script>
+        const form = document.querySelector("#formAge");
+        const resultat = document.querySelector("#resultat");
+
+        form.addEventListener("submit", e => {
+            e.preventDefault();
+
+            const prenom = document.querySelector("#prenom").value.trim();
+            const annee = document.querySelector("#annee").value;
+            const anneeCourante = 2025;
+
+            resultat.className = "";
+
+            if (!prenom || !annee) {
+                resultat.textContent = "Veuillez remplir tous les champs.";
+                resultat.classList.add("erreur");
+                return;
+            }
+
+            const age = anneeCourante - annee;
+
+            if (age < 0 || age > 120) {
+                resultat.textContent = "Année de naissance invalide.";
+                resultat.classList.add("erreur");
+            } else if (age < 18) {
+                resultat.textContent = `Bonjour {prenom}, tu as {age} ans (mineur).`;
+                resultat.classList.add("avertissement");
+            } else {
+                resultat.textContent = `Bonjour {prenom}, tu as {age} ans (majeur).`;
+                resultat.classList.add("succes");
+            }
+        });
+    </script>
+</body>
+</html>
